@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchProductById } from '../api';
+import '../css/product.css';
 
-const ProductDetail = ({ addToCart }) => {
+import { addToCart, removeFromCart } from '../actions/cartActions';
+
+import { useDispatch } from 'react-redux';
+const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+
+  const dispatch = useDispatch();  // Hook to dispatch actions
+
+  // Handle add to cart functionality
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));  // Dispatch the action with the product details
+  };
 
   useEffect(() => {
     // Fetch specific product by ID
@@ -20,12 +31,26 @@ const ProductDetail = ({ addToCart }) => {
   }
 
   return (
-    <div className="product-detail">
-      <img src={product.imageUrl} alt={product.name} />
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
-      <h2>${product.price}</h2>
-      <button onClick={() => addToCart(product)}>Add to Cart</button>
+    <div className="product-detail-container">
+      <div className="product-detail">
+        {/* Product image section */}
+        <div className="product-image-container">
+          <img className="product-image" src={product.imageUrl} alt={product.name} />
+        </div>
+        
+        {/* Product information section */}
+        <div className="product-info">
+          <h1 className="product-name">{product.name}</h1>
+          <p className="product-description">{product.description}</p>
+          <h2 className="product-price">${product.price}</h2>
+
+          {/* Add to cart and buy now buttons */}
+          <div className="action-buttons">
+            <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>Add to Cart</button>
+            <button className="buy-now-btn">Buy Now</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

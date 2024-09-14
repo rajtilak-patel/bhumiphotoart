@@ -7,6 +7,9 @@ import Cart from './components/Cart';
 import Checkout from './pages/Checkout';
 import Navbar from './components/Navbar';
 
+import './App.css';
+import Footer from './pages/Footer';
+
 function App() {
   const [cartItems, setCartItems] = React.useState([]);
 
@@ -25,7 +28,24 @@ function App() {
     }
   };
 
+  // Function to update the quantity of a product in the cart
+const updateQuantity = (item, newQuantity) => {
+  // Check if the new quantity is valid (i.e., greater than 0)
+  if (newQuantity > 0) {
+    // If the quantity is valid, update it in the cart
+    const updatedCartItems = cartItems.map(cartItem =>
+      cartItem.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem
+    );
+    // Set the updated cart items
+    setCartItems(updatedCartItems);
+  } else {
+    // If the new quantity is 0 or less, remove the item from the cart
+    removeFromCart(item.id);
+  }
+};
+
   const removeFromCart = (id) => {
+    console.log(id,"Product id");
     setCartItems(cartItems.filter((item) => item._id !== id));
   };
 
@@ -52,7 +72,7 @@ function App() {
         {/* Cart Page Route */}
         <Route
           path="/cart"
-          element={<Cart cartItems={cartItems} removeFromCart={removeFromCart} />}
+          element={<Cart cartItems={cartItems} removeFromCart={removeFromCart}  updateQuantity={updateQuantity} />}
         />
 
         {/* Checkout Page Route */}
@@ -61,6 +81,7 @@ function App() {
           element={<Checkout cartItems={cartItems} clearCart={clearCart} />}
         />
       </Routes>
+      <Footer/>
     </Router>
   );
 }
