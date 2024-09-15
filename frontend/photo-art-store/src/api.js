@@ -10,6 +10,9 @@ export const fetchProducts = () => api.get('/products');
 // Fetch a specific product by ID
 export const fetchProductById = (id) => api.get(`/products/${id}`);
 
+// fetch all cart data
+export const fetchCart = () => api.get('/cart');
+
 // Place an order (used in checkout)
 export const placeOrder = (orderData) => api.post('/orders', orderData);
 

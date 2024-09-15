@@ -1,32 +1,19 @@
 const initialState = {
-  cartItems: []
+  cartItems: [],  // Cart items array
+  loading: false,
+  error: null
 };
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_TO_CART':
-      const item = action.payload;
+    case 'ADD_TO_CART_REQUEST':
+      return { ...state, loading: true };
+      
+    case 'ADD_TO_CART_SUCCESS':
+      return { ...state, loading: false, cartItems: action.payload };
 
-      // Check if the product already exists in the cart
-      const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
-
-      if (existingItem) {
-        // If it exists, update the quantity
-        return {
-          ...state,
-          cartItems: state.cartItems.map(cartItem =>
-            cartItem.id === existingItem.id
-              ? { ...cartItem, quantity: cartItem.quantity + 1 } // Increase quantity
-              : cartItem
-          )
-        };
-      } else {
-        // If it doesn't exist, add the new product to the cart
-        return {
-          ...state,
-          cartItems: [...state.cartItems, { ...item, quantity: 1 }]  // Set default quantity to 1
-        };
-      }
+    case 'ADD_TO_CART_FAIL':
+      return { ...state, loading: false, error: action.payload };
     
     case 'REMOVE_FROM_CART':
         return {

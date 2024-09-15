@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
   return (
+
     <div className="border rounded-lg shadow-lg p-4">
+      <p>${product._id}</p>
       <Link to={`/product/${product._id}`}>
         <div className="text-center">
           <img

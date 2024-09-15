@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, removeFromCart } from '../actions/cartActions';
+import { addToCart, removeFromCart} from '../actions/cartActions';
+import { getCartItems } from '../slices/cartSlice';
 import '../css/cartPage.css';
+
 const Cart = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector(state => state.cart.cartItems);
+   // Get cart items and loading state from Redux
+   const { cartItems, loading, error } = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    // Fetch cart items when the component mounts
+      dispatch(getCartItems());
+  }, [dispatch]);
 
   const handleRemoveFromCart = (id) => {
     console.log(id,"remove cart");
@@ -22,55 +30,40 @@ const Cart = () => {
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
-
+    cartItems.map((item)=>{
+       item.products.map((value)=>{
+        console.log(value._id, "data");
+        console.log(value.productId, "data");
+        console.log(value.quantity,"data");
+       });
+    });
   return (
-    <div className="cart-page-container">
-      <div className="cart-items-section">
-        <h2>Shopping Cart</h2>
-        {cartItems.length === 0 ? (
-          <p>Your cart is empty!</p>
+      <div className="cart-page">
+        <h1>Your Cart</h1>
+  
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : cartItems.length === 0 ? (
+          <p>Your cart is empty.</p>
         ) : (
-          cartItems.map(item => (
-            <div key={item._id} className="cart-item">
-              <img src={item.imageUrl} alt={item.name} className="cart-item-image" />
-              <div className="cart-item-info">
-                <h3>{item.name}</h3>
-                <p className="cart-item-price">${item.price}</p>
-                <div className="quantity-control">
-                  <button onClick={() => updateQuantity(item, item.quantity - 1)}>-</button>
-                  <span>{item.quantity}</span>
-                  <button onClick={() => updateQuantity(item, item.quantity + 1)}>+</button>
+          <div className="cart-items">
+            {cartItems.map((item) => (
+              <div key={item.productId} className="cart-item">
+                <p>{item.products._id} hello world</p>
+                <img src={item.imageUrl} alt={item.name} className="cart-item-image" />
+                <div className="cart-item-info">
+                  <h2>{item.name}</h2>
+                  <p>Price: ${item.price}</p>
+                  <p>Quantity: {item.quantity}</p>
                 </div>
-                <button className="remove-btn" onClick={() => handleRemoveFromCart(item.id)}>Remove</button>
               </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </div>
-
-      {/* Price Summary Section */}
-      <div className="price-summary-section">
-        <h2 className="summary-title">Price Details</h2>
-        <div className="summary-item">
-          <span>Price ({cartItems.length} items)</span>
-          <span>${calculateTotal()}</span>
-        </div>
-        <div className="summary-item">
-          <span>Discount</span>
-          <span className="discount-amount">-$0.00</span>
-        </div>
-        <div className="summary-item">
-          <span>Delivery Charges</span>
-          <span>Free</span>
-        </div>
-        <div className="summary-item total-amount">
-          <span>Total Amount</span>
-          <span>${calculateTotal()}</span>
-        </div>
-        <button className="place-order-btn">Place Order</button>
-      </div>
-    </div>
-  );
-};
+    );
+  };
 
 export default Cart;

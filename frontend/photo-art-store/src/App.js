@@ -2,13 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Gallery from './pages/Gallery';
-import ProductDetail from './pages/ProductDetail';
 import Cart from './components/Cart';
 import Checkout from './pages/Checkout';
 import Navbar from './components/Navbar';
 
 import './App.css';
 import Footer from './pages/Footer';
+import ProductDetails from './pages/ProductDetail';
 
 function App() {
   const [cartItems, setCartItems] = React.useState([]);
@@ -66,7 +66,7 @@ const updateQuantity = (item, newQuantity) => {
         {/* Product Detail Page Route */}
         <Route
           path="/product/:id"
-          element={<ProductDetail addToCart={addToCart} />}
+          element={<ProductDetails addToCart={addToCart} />}
         />
 
         {/* Cart Page Route */}

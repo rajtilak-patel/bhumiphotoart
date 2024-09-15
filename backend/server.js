@@ -4,6 +4,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/user');
 const productRoutes = require('./routes/product');
 const orderRoutes = require('./routes/order');
+const cartRoutes = require('./routes/cart');
 const seedDB = require('./seed');
 
 const app = express();
@@ -20,6 +21,7 @@ mongoose.connect('mongodb://localhost:27017/photoArtStore', {
 app.use('/api/auth', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.listen(4000, () => {
   console.log('Server is running on port 4000');
