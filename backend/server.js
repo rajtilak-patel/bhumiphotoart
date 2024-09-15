@@ -1,10 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const userRoutes = require('./routes/user');
-const productRoutes = require('./routes/product');
-const orderRoutes = require('./routes/order');
-const cartRoutes = require('./routes/cart');
+const userRoutes = require('./routes/userRouter');
+const productRoutes = require('./routes/productRouter');
+const orderRoutes = require('./routes/orderRouter');
+const cartRoutes = require('./routes/cartRouter');
 const seedDB = require('./seed');
 
 const app = express();

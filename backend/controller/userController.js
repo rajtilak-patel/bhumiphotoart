@@ -1,7 +1,7 @@
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/UserModel');
 const { JWT_SECRET } = process.env;
 const createUser = async (req, res) => {
     const { username, email, password } = req.body;
