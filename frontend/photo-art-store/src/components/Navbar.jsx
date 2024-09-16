@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth); // Check if the user is authenticated
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login'); // Redirect to login page after logout
   };
 
   return (
@@ -27,12 +39,33 @@ const Navbar = () => {
             <Link to="/gallery" className="text-gray-800 hover:text-gray-600">
               Gallery
             </Link>
-            <Link to="/cart" className="text-gray-800 hover:text-gray-600">
-              Cart
-            </Link>
-            <Link to="/checkout" className="text-gray-800 hover:text-gray-600">
-              Checkout
-            </Link>
+
+            {/* Conditional rendering based on authentication */}
+            {user ? (
+              <>
+                <Link to="/cart" className="text-gray-800 hover:text-gray-600">
+                  Cart
+                </Link>
+                <Link to="/checkout" className="text-gray-800 hover:text-gray-600">
+                  Checkout
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-gray-800 hover:text-gray-600"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="text-gray-800 hover:text-gray-600">
+                  Login
+                </Link>
+                <Link to="/signup" className="text-gray-800 hover:text-gray-600">
+                  Signup
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -76,20 +109,52 @@ const Navbar = () => {
             >
               Gallery
             </Link>
-            <Link
-              to="/cart"
-              className="block text-gray-800 hover:text-gray-600 py-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Cart
-            </Link>
-            <Link
-              to="/checkout"
-              className="block text-gray-800 hover:text-gray-600 py-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Checkout
-            </Link>
+
+            {/* Conditional rendering for mobile menu based on authentication */}
+            {user ? (
+              <>
+                <Link
+                  to="/cart"
+                  className="block text-gray-800 hover:text-gray-600 py-2"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Cart
+                </Link>
+                <Link
+                  to="/checkout"
+                  className="block text-gray-800 hover:text-gray-600 py-2"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Checkout
+                </Link>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsOpen(false);
+                  }}
+                  className="block text-gray-800 hover:text-gray-600 py-2"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="block text-gray-800 hover:text-gray-600 py-2"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className="block text-gray-800 hover:text-gray-600 py-2"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Signup
+                </Link>
+              </>
+            )}
           </div>
         )}
       </div>
