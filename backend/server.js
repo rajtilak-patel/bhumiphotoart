@@ -17,7 +17,7 @@ app.use(express.json());
 mongoose.connect('mongodb://localhost:27017/photoArtStore', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(() => console.log('MongoDB connected')).catch(err => console.log(err));
+}).then(() => console.log('MongoDB connected on mongodb://localhost:27017/photoArtStore')).catch(err => console.log(err));
 
 // seedDB()
 // Routes
