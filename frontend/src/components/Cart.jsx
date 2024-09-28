@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, removeFromCart} from '../actions/cartActions';
 import { getCartItems } from '../slices/cartSlice';
 import '../css/cartPage.css';
 
@@ -62,22 +61,22 @@ const Cart = () => {
           dispatch(getCartItems());
       }, [dispatch]);
 
-      const handleRemoveFromCart = (id) => {
-        console.log(id,"remove cart");
-        dispatch(removeFromCart(id));
-      };
+      // const handleRemoveFromCart = (id) => {
+      //   console.log(id,"remove cart");
+      //   dispatch(removeFromCart(id));
+      // };
 
-      const updateQuantity = (item, newQuantity) => {
-        if (newQuantity > 0) {
-          dispatch(addToCart({ ...item, quantity: newQuantity }));
-        } else {
-          dispatch(removeFromCart(item.id));
-        }
-      };
+      // const updateQuantity = (item, newQuantity) => {
+      //   if (newQuantity > 0) {
+      //     dispatch(addToCart({ ...item, quantity: newQuantity }));
+      //   } else {
+      //     dispatch(removeFromCart(item.id));
+      //   }
+      // };
 
-      const calculateTotal = () => {
-        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-      };
+      // const calculateTotal = () => {
+      //   return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+      // };
 
   return user ? (
     <div className="cart-page">

@@ -5,11 +5,13 @@ import Slider from 'react-slick';
 const Home = () => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetchProducts().then((response) => {
-      setProducts(response.data);
-    });
+    fetchProductsData();
   }, []);
 
+  const fetchProductsData = async () => {
+    const res = await fetchProducts();
+    setProducts(res.data);
+  }
   return (
     <div>
       <Banner />

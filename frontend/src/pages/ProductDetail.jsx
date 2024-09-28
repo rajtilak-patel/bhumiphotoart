@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 import { fetchProductById } from '../api';
 import '../css/product.css';
 
-import { addToCart, removeFromCart } from '../actions/cartActions';
-
 import { useDispatch } from 'react-redux';
+import { postCartData } from '../slices/cartSlice';
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -13,8 +12,8 @@ const ProductDetail = () => {
   const dispatch = useDispatch();  // Hook to dispatch actions
 
   // Handle add to cart functionality
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));  // Dispatch the action with the product details
+  const handleAddToCart = async(product) => {
+    dispatch(postCartData(product)); // Dispatch the action with the product details
   };
 
   useEffect(() => {

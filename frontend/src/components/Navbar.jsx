@@ -46,9 +46,9 @@ const Navbar = () => {
                 <Link to="/cart" className="text-gray-800 hover:text-gray-600">
                   Cart
                 </Link>
-                <Link to="/checkout" className="text-gray-800 hover:text-gray-600">
+                {/* <Link to="/checkout" className="text-gray-800 hover:text-gray-600">
                   Checkout
-                </Link>
+                </Link> */}
                 <button
                   onClick={handleLogout}
                   className="text-gray-800 hover:text-gray-600"
@@ -120,13 +120,13 @@ const Navbar = () => {
                 >
                   Cart
                 </Link>
-                <Link
+                {/* <Link
                   to="/checkout"
                   className="block text-gray-800 hover:text-gray-600 py-2"
                   onClick={() => setIsOpen(false)}
                 >
                   Checkout
-                </Link>
+                </Link> */}
                 <button
                   onClick={() => {
                     handleLogout();

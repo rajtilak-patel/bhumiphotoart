@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { fetchCart, postCart } from '../api';
 
 // Async thunk to handle API call for adding to cart
 export const addToCart = createAsyncThunk(
@@ -25,11 +26,23 @@ export const getCartItems = createAsyncThunk(
     'cart/getCartItems',
     async () => {
       try {
-        const { data } = await axios.get(`/api/cart/`);
-        console.log(data,"cart data");
-        return data;  // The array of cart items
+        const { data } = await fetchCart();
+        console.log(data[0],"cart data");
+        return data[0];  // The array of cart items
       } catch (error) {
          console.log(error);
+      }
+    }
+  );
+
+  export const postCartData = createAsyncThunk(
+    'cart/postCartData',
+    async (data, { rejectWithValue }) => {
+      try {
+        const res = await postCart({data,quantity:1});
+        console.log(res);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
       }
     }
   );

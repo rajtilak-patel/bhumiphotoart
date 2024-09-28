@@ -105,6 +105,7 @@ import Checkout from './pages/Checkout';
 import Navbar from './components/Navbar';
 import Footer from './pages/Footer';
 import SignupPage from './pages/SignupPage';
+import ProductDetail from './pages/ProductDetail';
 
 function App() {
   return (
@@ -117,7 +118,8 @@ function App() {
         <Route path="/signup" element={<SignupPage/>} />
         {/* Protect these routes */}
         <Route path="/cart" element={<ProtectedRoute element={Cart} />} />
-        <Route path="/checkout" element={<ProtectedRoute element={Checkout} />} />
+        <Route path="/product/:id" element={<ProtectedRoute element={ProductDetail} />} />
+        {/* <Route path="/checkout" element={<ProtectedRoute element={Checkout} />} /> */}
       </Routes>
       <Footer/>
     </Router>

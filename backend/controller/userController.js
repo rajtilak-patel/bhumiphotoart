@@ -25,12 +25,9 @@ const createUser = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid password' });
     }
-    console.log(user._id);
-
     // const token = jwt.sign( JWT_SECRET, { expiresIn: '1h' });
     // how generate token
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET);
-    console.log(token);
+    const token = jwt.sign({ userID: user._id }, JWT_SECRET);
     res.json({token,user});
   }
 
